@@ -75,18 +75,18 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
 
     # upsample
     layer3a_in1 = tf.layers.conv2d_transpose(layer4a_out, num_classes, 4,  strides= (2, 2), padding= 'same', 
-            kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+            kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     # 1x1 convolution of vgg layer 3
     layer3a_in2 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding= 'same', 
-            kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+            kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     # skip connection (element-wise addition)
     layer3a_out = tf.add(layer3a_in1, layer3a_in2)
 
     # upsample
     nn_last_layer = tf.layers.conv2d_transpose(layer3a_out, num_classes, 16,  strides= (8, 8), padding= 'same', 
-            kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+            kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     return nn_last_layer
 tests.test_layers(layers)
@@ -172,7 +172,7 @@ def run():
 
         # TODO: Build NN using load_vgg, layers, and optimize function
         epochs = 50
-        batch_size = 5
+        batch_size = 3
 
         # TF placeholders
         correct_label = tf.placeholder(tf.int32, [None, None, None, num_classes], name='correct_label')
